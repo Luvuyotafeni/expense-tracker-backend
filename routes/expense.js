@@ -17,4 +17,14 @@ router.post('/', async(req, res) => {
     }
 });
 
+// Get Expenses
+router.get('/:userId', async (req, res) => {
+    try {
+      const expenses = await Expense.find({ userId: req.params.userId });
+      res.json(expenses);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
 module.exports = router;
