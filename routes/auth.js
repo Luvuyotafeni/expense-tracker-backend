@@ -16,4 +16,19 @@ router.post('/register', async (req,res) => {
     catch (err){
         res.status(500).json({ error: err.message});
     }
+});
+
+//Login Route
+
+router.post('/login', async (req, res) => {
+    try {
+        const {username, password} = req.body;
+        const user = await User.findOne({username});
+        if (!user) return res.status(400).json({message: 'user does not exist'});
+
+        const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET, { expiresIn : '1h'});
+        res.json({token})
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
 })
