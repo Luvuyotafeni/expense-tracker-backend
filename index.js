@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const expenseRoutes = require('./routes/expense');
-const incomeRoutes = require('./routes/');
+const incomeRoutes = require('./routes/income');
 
 const app = express();
 
