@@ -7,7 +7,12 @@ const router = express.Router();
 
 router.post('/', async(req, res) => {
     try{
+
+
         const {userId, text, amount} = req.body;
+        if (!userId || !text || !amount){
+          return res.status(400).json({error : 'all fields required'});
+        }
         const newExpense = new Expense({userId, text, amount});
 
         await newExpense.save();
