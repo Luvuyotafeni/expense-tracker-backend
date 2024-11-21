@@ -21,12 +21,13 @@ router.post('/', async (req, res) => {
 });
 
 //getting the income
+// Get income for a specific user
 router.get('/:userId', async (req, res) => {
     try {
-        const income = await Income.find({userId: req.params.userId});
-        res.json(income);
+        const income = await Income.find({ userId: req.params.userId }).select('_id userId text amount date');
+        res.json(income); // Ensure the response includes the `_id` field
     } catch (err) {
-        res.status(500).json({error: err.message});
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -34,7 +35,6 @@ router.get('/:userId', async (req, res) => {
 // deleting the income
 router.delete('/:id', async (req, res) => {
     try {
-        console.log(`Deleting income with ID: ${req.params.id}`);
         const income = await Income.findByIdAndDelete(req.params.id);
         if (!income) {
             return res.status(404).json({ error: 'Income not found' });
